@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <script th:include="fragment/header :: headerScripts" th:remove="tag"></script>
+
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <h3 style="margin-bottom: 40px; margin-top: 30px" th:text="${'Registreering '+id}"></h3>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10 my-auto">
+            <nav class="navbar bg-light justify-content-center">
+
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/records">See all registrations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="javascript: void(0)" th:text="${'Registreering '+id}"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-9 ">
+    <div class="card text-center">
+        <div class="card-header">
+            Visit
+        </div>
+        <div class="card-body">
+            <ul style="font-weight: bold; font-size: large" class="list-group">
+                <li class="list-group-item list-group-item-info" th:text="${'Arsti nimi: '+record.dentistName}">Cras justo odio</li>
+                <li class="list-group-item list-group-item-info" th:text="${'Kuupäev: '+#temporals.format(record.date,'dd/MM/yyyy')}">Dapibus ac facilisis in</li>
+                <li class="list-group-item list-group-item-info" th:text="${'Kellaaeg: '+record.time}">Morbi leo risus</li>
+                <li class="list-group-item list-group-item-info" th:text="${'Patsiendi nimi: '+record.patientName}">Porta ac consectetur ac</li>
+                <li class="list-group-item list-group-item-info" th:text="${'Kommentaar: '+record.comment}">Vestibulum at eros</li>
+            </ul>
+        </div>
+        <div class="card-footer text-muted">
+           | Dental Clinik OÜ -  Aadress: Viru 5, Tallinn - Telefon: 5555555 |
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

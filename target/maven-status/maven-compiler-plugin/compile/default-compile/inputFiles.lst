@@ -1,0 +1,8 @@
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/controller/DentistAppController.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/WebConfiguration.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/service/DentistVisitService.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/entity/DentistVisitEntity.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/repository/DentistVisitRepository.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/dto/Response.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/DentistAppApplication.java
+/Users/mohamed/Documents/azureDevops/3-Pipelines/tp-cgi-dentiste-docker-springboot/src/main/java/com/cgi/dentistapp/dto/DentistVisitDTO.java

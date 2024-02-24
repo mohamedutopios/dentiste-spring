@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    .hidden {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+  </style>
+</head>
+
+<div th:fragment="form-fragment">
+  <div class="row justify-content-center">
+    <div class="col-10">
+
+      <form id="sendForm" class="row-g-3" action="" th:object="${dentistVisit}" method="post">
+
+        <div id="message"  class="hidden"><p style="color: green; font-weight: bold" th:text="#{registration.fail}" ></p> </div>
+
+        <input type="hidden" th:field="${dentistVisit.id}" id="param"/>
+
+        <div class="col-10 mb-3">
+          <div><label for="name" class="col-form-label col-form-label-lg" th:text="#{dentist.name}">dentist.name</label></div>
+          <select class="form-control " id="name" th:field="*{dentistName}">
+            <option th:each="name : ${dentistVisit.getDentists()}"
+                    th:value="${name}"
+                    th:text="${name}">Choose...</option>>
+          </select>
+        </div>
+        <div class="col-6 mb-2">
+          <div><label for="date" class="col-form-label col-form-label-lg" th:text="#{visit.date}">visit.date</label></div>
+          <input id="date" class="form-control " type="date" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="*{date}"/>
+        </div>
+        <div class="col-6 mb-2">
+          <div><label for="time" class="col-form-label col-form-label-lg" th:text="#{visit.time}">visit.time</label></div>
+          <input id="time" class="form-control " type="time" min="08:00:00" max="17:00:00" th:field="*{time}"/>
+        </div>
+        <div class="col-10 mb-2">
+          <div><label for="patientName" class="col-form-label col-form-label-lg" th:text="#{patient.name}">patient.name</label></div>
+          <input id="patientName" class="form-control " type="text" th:field="*{patientName}"/>
+        </div>
+        <div class="col-6 mb-2">
+          <div><label for="comment" class="col-form-label col-form-label-lg" th:text="#{comment.note}">comment.note</label></div>
+          <input id="comment" class="form-control " type="text" th:field="*{comment}"/>
+          <div th:if="${#fields.hasErrors('comment')}" style="color: red" th:errors="*{comment}">Size.dentistVisit.comment</div>
+        </div>
+        <br>
+
+      </form>
+      <button style="margin-bottom: 10px" id="submitBtn" class="btn btn-success" th:text="#{update.visit}"></button>
+    </div>
+
+  </div>
+</div>
+
+</html>

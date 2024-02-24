@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dental Registry</title>
+    <script th:include="fragment/header :: headerScripts" th:remove="tag"></script>
+<style>
+    .hidden {
+        display: none;
+    }
+    .visible {
+        display: block;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+<h3 style="margin-bottom: 40px; margin-top: 30px" th:text="#{registration.header}"></h3>
+        </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10 my-auto">
+            <nav class="navbar bg-light justify-content-center">
+                <div style="position: absolute; right: 80%" th:classappend="${result!=null&&result=='Success'}? visible" id="result" class="hidden"><p style="color: green; font-weight: bold; margin-top: 5px" th:text="#{registration.ok}" ></p> </div>
+                <div style="position: absolute; right: 80%" th:classappend="${result!=null&&result=='Fail'}? visible" id="resultFail" class="hidden"><p style="color: green; font-weight: bold; margin-top: 5px" th:text="#{registration.fail}" ></p> </div>
+
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/records">See all registrations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javasript:void(0)">Registration</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-10">
+
+            <form id="sendForm" class="row-g-3" action="" th:object="${dentistVisit}" method="post">
+        <div class="col-10 mb-3">
+            <div><label for="name" class="col-form-label col-form-label-lg" th:text="#{dentist.name}">dentist.name</label></div>
+            <select class="form-control " id="name" th:field="*{dentistName}">
+                <option value="" selected="selected">Choose a doctor</option>
+                <option th:each="name : ${dentistVisit.getDentists()}"
+                        th:value="${name}"
+                        th:text="${name}">Choose...</option>>
+            </select>
+            <div th:if="${#fields.hasErrors('dentistName')}" style="color: red" th:errors="*{dentistName}">Size.dentistVisit.dentistName</div>
+        </div>
+        <div class="col-6 mb-2">
+            <div><label for="date" class="col-form-label col-form-label-lg" th:text="#{visit.date}">visit.date</label></div>
+            <input id="date" class="form-control " type="date" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="*{date}"/>
+            <div th:if="${#fields.hasErrors('date')}" style="color: red" th:errors="*{date}">NotNull.dentistVisit.date</div>
+        </div>
+        <div class="col-6 mb-2">
+            <div><label for="time" class="col-form-label col-form-label-lg" th:text="#{visit.time}">visit.time</label></div>
+            <input id="time" class="form-control" type="time" min="08:00:00" max="17:00:00" th:field="*{time}"/>
+            <div th:if="${#fields.hasErrors('time')}" style="color: red" th:errors="*{date}">NotNull.dentistVisit.date</div>
+        </div>
+        <div class="col-10 mb-2">
+            <div><label for="patientName" class="col-form-label col-form-label-lg" th:text="#{patient.name}">patient.name</label></div>
+            <input id="patientName" class="form-control " type="text" th:field="*{patientName}"/>
+            <div th:if="${#fields.hasErrors('patientName')}" style="color: red" th:errors="*{patientName}">Size.dentistVisit.patientName</div>
+        </div>
+        <div class="col-6 mb-2">
+            <div><label for="comment" class="col-form-label col-form-label-lg" th:text="#{comment.note}">comment.note</label></div>
+            <input id="comment" class="form-control " type="text" th:field="*{comment}"/>
+            <div th:if="${#fields.hasErrors('comment')}" style="color: red" th:errors="*{comment}">Size.dentistVisit.comment</div>
+        </div>
+        <br>
+    </form>
+
+    <button style="margin-bottom: 10px" form="sendForm" id="submitBtn" class="btn btn-success" type="submit" th:text="#{register.visit}"></button>
+    </div>
+
+</div>
+</div>
+</body>
+    <script>
+        $(window).on('load',function (){
+                    if($('#result').hasClass('visible')){
+                        console.log("Cleared")
+                        $('#sendForm').find("input[type=text],input[type=date],input[type=time]").val('');
+                        $('#name').prop('selectedIndex',0);
+                    }
+        });
+        $('#sendForm').find("input[type=text],input[type=date],input[type=time], select").on('change keyup paste',function (){
+            $('#result').removeClass('visible');
+        })
+
+
+
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hambaarsti registratuur</title>
+    <script th:include="fragment/header :: headerScripts" th:remove="tag"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+    </style>
+    <script type="text/javascript" src="/javascript/recordsScripts.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <h3 style="margin-bottom: 40px; margin-top: 30px" th:text="#{registration.all}"></h3>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10 my-auto">
+            <nav class="navbar bg-light justify-content-center">
+
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/records">See all registrations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript: void(0)">Registration </a>
+                    </li>
+                </ul>
+                <div style="display: inline-block; position: absolute; right: 10%">
+                <div class="input-group">
+                    <div class="form-outline">
+                        <input type="search" id="form1" class="form-control" th:placeholder="#{search.dentist}" />
+                    </div>
+                    <button th:attr="onclick=|search()|" id="search" type="button" class="btn btn-primary">
+                        Otsi
+                    </button>
+                </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <table id="dataTable" style="border-spacing: 0 3px; border-collapse: separate" class="table">
+                <thead>
+                <tr>
+                <th></th>
+                <th>ID</th>
+                <th scope="col">Doctor's name</th>
+                <th scope="col">Date of visit</th>
+                <th scope="col">Time of visit</th>
+                <th scope="col">Patient name</th>
+                <th scope="col">Commentary</th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                <tr th:id="${record.getId()}" style="cursor: pointer" th:each="record : ${records}" >
+                <td><a class="btn btn-warning btn-block" th:id="${record.getId()}" th:attr="onclick=|closeOpenModal('${record.id}')|">Change</a></td>
+                <td th:text="${record.getId()}" th:attr="onclick=|rowClicked('${record.id}')|" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'">1</td>
+                <td th:text="${record.getDentistName()}" th:id="${record.getId()+'dentistName'}" th:attr="onclick=|rowClicked('${record.id}')|" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'">1</td>
+                <td th:text="${#temporals.format(record.getDate(),'dd/MM/yyyy')}" th:id="${record.getId()+'updatedDate'}" th:attr="onclick=|rowClicked('${record.id}')|" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'">1</td>
+                <td th:text="${record.getTime()}" th:attr="onclick=|rowClicked('${record.id}')|" th:id="${record.getId()+'updatedTime'}" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'">1</td>
+                <td th:text="${record.getPatientName()}" th:id="${record.getId()+'updatedPname'}" th:attr="onclick=|rowClicked('${record.id}')|" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'"></td>
+                <td th:text="${record.getComment()}" th:id="${record.getId()+'updatedComment'}" th:attr="onclick=|rowClicked('${record.id}')|" th:classappend="${records.indexOf(record)%2!=0}?'list-group-item-danger':'list-group-item-success'"></td>
+                <td><a class="btn btn-danger btn-block" th:id="${record.getId()}" th:attr="onclick=|deleteRecord('${record.id}')|">Delete from</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; color: red" th:classappend="${records.size()==0}?visible" class="hidden">No records to display</p>
+        </div>
+
+    </div>
+</div>
+<div id="modal" class="modal hidden" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change registration</h5>
+            </div>
+            <div class="modal-body">
+                <div th:replace="fragment/form-fragment :: form-fragment">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

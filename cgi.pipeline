@@ -1,0 +1,48 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'ubuntu'
+    }
+
+    options{
+
+        timestamps()
+    }
+
+    stages {
+        stage("build maven artifact") {
+            steps {
+                sh 'mvn install'
+            }
+        }
+        stage ("create docker image") {
+            steps {
+                    echo "Starting build"
+                    sh 'docker build -t dentist .'
+            }
+        }
+            stage ("start container"){
+                steps {
+                    parallel(
+                            a: {
+                                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                                    sh 'timeout 30 docker run -p 127.0.0.1:8080:8080 --name dentist-app dentist'
+                                }
+                            },
+                            b: {
+                                sh 'java -version'
+                            })
+                }
+            }
+        stage ("final stage"){
+            steps {
+                sh 'docker container ls -a'
+                sh 'docker rm $(docker ps -a -q)'
+
+            }
+        }
+        }
+    }
+
